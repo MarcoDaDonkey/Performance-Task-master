@@ -32,13 +32,17 @@ start_text = smaller_font.render('Press Space to Start', True, (255, 255, 255))
 start_text_rect = start_text.get_rect()
 start_text_rect.center = (x // 2, 500)
 
-dino_egg = pygame.transform.scale(pygame.image.load('dinosaur_egg.png'), (400, 400)).convert()
+dino_egg = pygame.transform.scale(pygame.image.load('dinosaur_egg.png'), (380, 400)).convert()
 dino_egg_rect = dino_egg.get_rect()
 dino_egg_rect.center = (x // 2, 360)
 
-dino_egg = pygame.transform.scale(pygame.image.load('dinosaur_egg.png'), (400, 400)).convert()
-dino_egg_rect = dino_egg.get_rect()
-dino_egg_rect.center = (x // 2, 360)
+water_dino_egg = pygame.transform.scale(pygame.image.load('water_dinosaur_egg.png'), (420, 400)).convert()
+water_dino_egg_rect = water_dino_egg.get_rect()
+water_dino_egg_rect.center = (1000, 360)
+
+air_dino_egg = pygame.transform.scale(pygame.image.load('air_dino_egg.png'), (420, 400)).convert()
+air_dino_egg_rect = air_dino_egg.get_rect()
+air_dino_egg_rect.center = (200, 360)
 
 my_dino_text = slightly_smaller_font.render('View Dinos', True, (255, 255, 255))
 my_dino_text_rect = my_dino_text.get_rect()
@@ -48,20 +52,66 @@ back_text = slightly_smaller_font.render('Back', True, (255, 255, 255))
 back_text_rect = back_text.get_rect()
 back_text_rect.center = (x // 2, 600)
 
+land_text = slightly_smaller_font.render('Land Egg', True, (255, 255, 255))
+land_text_rect = land_text.get_rect()
+land_text_rect.center = (x // 2, 600)
+
+water_text = slightly_smaller_font.render('Water Egg', True, (255, 255, 255))
+water_text_rect = water_text.get_rect()
+water_text_rect.center = (1000, 600)
+
+air_text = slightly_smaller_font.render('Air Egg', True, (255, 255, 255))
+air_text_rect = air_text.get_rect()
+air_text_rect.center = (200, 600)
+
 #locating mouse position at all times
 mouse = pygame.mouse.get_pos()
 
 #dino dictionary that contains information
 dino_dictionary = {
-'Allosaurus': ['8.5 m tall and 9.7 m long', '4,400 Ilbs', 'Diet: Meat', 'Group: Therapod', 'Period: Late Jurassic'], 'Ankylosaurus' : [], 'Archaeopteryx' : [],
-'Argentinosaurus' : [], 'Baryonyx': [],'Brachiosaurus': [], 'Carnotaurus': [], 'Compsognathus': [],
-'Dilophosaurus': [], 'Diplodocus': [], 'Eoraptor': [], 'Gallimimus': [], 'Giganotosaurus': [],
-'Gobisaurus': [], 'Iguanodon': [], 'Maiasaura': [], 'Megalosaurus': [], 'Microraptor': [],
-'Oviraptor': [], 'Pachycephalosaurus': [], 'Parasaurolophus': [],
-'Sarcosuchus': [], 'Spinosaurus': [], 'Stegosaurus': [], 'Styracosaurus': [], 'Supersaurus': [], 'Therizinosaurus': [], 
-'Triceratops': [], 'Troodon': [], 'Tyrannosaurus Rex': [], 'Utahraptor': [], 'Velociraptor': [],
-'Dimorphodon': [], 'Pteranodon': [], 'Pterodactylus': [], 'Quetzalcoatlus': [],
-'Dunkleosteus': [], 'Elasmosaurus': [], 'Helicoprion': [], 'Ichthyosaurus': [], 'Megalodon': [], 'Mosasaurus': [], 'Plesiosaurus': []
+'Allosaurus': ['8.5 m tall and 9.7 m long', '4,400 Ibs', 'Diet: Meat', 'Group: Therapod', 'Period: Late Jurassic'],
+'Ankylosaurus' : ['5.4m tall and 8.5m long', '17500 Ibs', 'Diet: PLants', 'Group: Thyreophora', 'Period: Late Cretaceous'],
+'Archaeopteryx' : [],
+'Argentinosaurus' : [],
+'Baryonyx': [],
+'Brachiosaurus': [],
+'Carnotaurus': [],
+'Compsognathus': [],
+'Dilophosaurus': [],
+'Diplodocus': [],
+'Eoraptor': [],
+'Gallimimus': [],
+'Giganotosaurus': [],
+'Gobisaurus': [],
+'Iguanodon': [],
+'Maiasaura': [],
+'Megalosaurus': [],
+'Microraptor': [],
+'Oviraptor': [],
+'Pachycephalosaurus': [],
+'Parasaurolophus': [],
+'Sarcosuchus': [],
+'Spinosaurus': [],
+'Stegosaurus': [],
+'Styracosaurus': [],
+'Supersaurus': [],
+'Therizinosaurus': [], 
+'Triceratops': [],
+'Troodon': [],
+'Tyrannosaurus Rex': [],
+'Utahraptor': [],
+'Velociraptor': [],
+'Dimorphodon': [],
+'Pteranodon': [],
+'Pterodactylus': [],
+'Quetzalcoatlus': [],
+'Dunkleosteus': [],
+'Elasmosaurus': [],
+'Helicoprion': [], 
+'Ichthyosaurus': [],
+'Megalodon': [], 
+'Mosasaurus': [],
+'Plesiosaurus': []
   }
 
 #dino list for random selection
@@ -119,17 +169,26 @@ while True:
       screen.fill((0, 0, 0))
       
       screen.blit(dino_egg, dino_egg_rect)
+      screen.blit(water_dino_egg, water_dino_egg_rect)
+      screen.blit(air_dino_egg, air_dino_egg_rect)
+
+      screen.blit(land_text, land_text_rect)
+      screen.blit(water_text, water_text_rect)
+      screen.blit(air_text, air_text_rect)
+
       my_dino_button = pygame.draw.rect(screen, (0, 200, 100), pygame.Rect(x // 2 - 150, 650, 300, 100))
       screen.blit(my_dino_text, my_dino_text_rect)
-
-      screen.blit(dino_egg, dino_egg_rect)
       
       #creating a button that activates with user input
       if event.type == pygame.MOUSEBUTTONDOWN:
         if dino_egg_rect.collidepoint(event.pos): 
-          hatch_dino(random.randint(0, 42))
+          hatch_dino(random.randint(0, 31))
         elif my_dino_button.collidepoint(event.pos):
           game_state = 'view_dino_screen'
+        elif water_dino_egg_rect.collidepoint(event.pos):
+          hatch_dino(random.randint(36, 42))
+        elif air_dino_egg_rect.collidepoint(event.pos):
+          hatch_dino(random.randint(32, 35))
       
       #allows text to linger on screen for more than a frame
       if time.time() - last_hatch_time < hatch_text_duration:
