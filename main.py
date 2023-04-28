@@ -36,6 +36,10 @@ dino_egg = pygame.transform.scale(pygame.image.load('dinosaur_egg.png'), (400, 4
 dino_egg_rect = dino_egg.get_rect()
 dino_egg_rect.center = (x // 2, 360)
 
+dino_egg = pygame.transform.scale(pygame.image.load('dinosaur_egg.png'), (400, 400)).convert()
+dino_egg_rect = dino_egg.get_rect()
+dino_egg_rect.center = (x // 2, 360)
+
 my_dino_text = slightly_smaller_font.render('View Dinos', True, (255, 255, 255))
 my_dino_text_rect = my_dino_text.get_rect()
 my_dino_text_rect.center = (x // 2, 700)
@@ -113,9 +117,12 @@ while True:
     #screen that shows the egg to hatch dinos
     if game_state == 'hatch_screen':
       screen.fill((0, 0, 0))
+      
       screen.blit(dino_egg, dino_egg_rect)
       my_dino_button = pygame.draw.rect(screen, (0, 200, 100), pygame.Rect(x // 2 - 150, 650, 300, 100))
       screen.blit(my_dino_text, my_dino_text_rect)
+
+      screen.blit(dino_egg, dino_egg_rect)
       
       #creating a button that activates with user input
       if event.type == pygame.MOUSEBUTTONDOWN:
